@@ -74,7 +74,7 @@ config SOC_INTEL_PANTHERLAKE_BASE
 	select SOC_INTEL_COMMON_BLOCK_IOE_P2SB
 	select SOC_INTEL_COMMON_BLOCK_IPU
 	select SOC_INTEL_COMMON_BLOCK_IRQ
-	select SOC_INTEL_COMMON_BLOCK_ME_SPEC_18 # TODO: Update with ME21 Spec
+	select SOC_INTEL_COMMON_BLOCK_ME_SPEC_21
 	select SOC_INTEL_COMMON_BLOCK_MEMINIT
 	select SOC_INTEL_COMMON_BLOCK_PCIE_RTD3
 	select SOC_INTEL_COMMON_BLOCK_PMC_EPOC
@@ -105,7 +105,6 @@ config SOC_INTEL_PANTHERLAKE_BASE
 	select UDELAY_TSC
 	select UDK_202302_BINDING
 	select USE_X86_64_SUPPORT
-	select X86_CLFLUSH_CAR
 	select X86_INIT_NEED_1_SIPI
 	help
 	  Intel Pantherlake support. Mainboards should specify the SoC
@@ -369,6 +368,7 @@ config SOC_INTEL_GFX_FRAMEBUFFER_OFFSET
 
 config DROP_CPU_FEATURE_PROGRAM_IN_FSP
 	bool
+	default y if MP_SERVICES_PPI_V2_NOOP || CHROMEOS
 	default n
 	help
 	  This is to avoid FSP running basic CPU feature programming on BSP

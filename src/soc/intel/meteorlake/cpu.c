@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 
-#include <assert.h>
 #include <console/console.h>
 #include <cpu/cpu.h>
 #include <cpu/intel/common/common.h>
@@ -21,6 +20,7 @@
 #include <soc/pci_devs.h>
 #include <soc/soc_chip.h>
 #include <soc/soc_info.h>
+#include <static.h>
 
 bool cpu_soc_is_in_untrusted_mode(void)
 {

@@ -20,6 +20,7 @@
 #include <soc/pm.h>
 #include <soc/soc_chip.h>
 #include <soc/systemagent.h>
+#include <static.h>
 #include <types.h>
 
 /*
@@ -225,6 +226,7 @@ static struct min_sleep_state min_pci_sleep_states[] = {
 	{ PCI_DEVFN_ESPI,	ACPI_DEVICE_SLEEP_D0 },
 	{ PCH_DEVFN_PMC,	ACPI_DEVICE_SLEEP_D0 },
 	{ PCI_DEVFN_HDA,	ACPI_DEVICE_SLEEP_D0 },
+	{ PCI_DEVFN_SMBUS,	ACPI_DEVICE_SLEEP_D0 },
 	{ PCI_DEVFN_SPI,	ACPI_DEVICE_SLEEP_D3 },
 	{ PCI_DEVFN_GBE,	ACPI_DEVICE_SLEEP_D3 },
 };

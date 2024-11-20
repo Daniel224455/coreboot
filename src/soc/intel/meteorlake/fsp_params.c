@@ -32,6 +32,7 @@
 #include <soc/ramstage.h>
 #include <soc/soc_chip.h>
 #include <soc/soc_info.h>
+#include <static.h>
 #include <stdlib.h>
 #include <string.h>
 #include <types.h>
@@ -578,7 +579,7 @@ static void fill_fsps_cnvi_params(FSP_S_CONFIG *s_cfg,
 		const struct soc_intel_meteorlake_config *config)
 {
 	struct device *port = NULL;
-	struct drivers_usb_acpi_config *usb_cfg;
+	struct drivers_usb_acpi_config *usb_cfg = NULL;
 	bool usb_audio_offload = false;
 
 	/* Search through the devicetree for matching USB devices */
@@ -615,7 +616,7 @@ static void fill_fsps_cnvi_params(FSP_S_CONFIG *s_cfg,
 	if (s_cfg->CnviBtAudioOffload && !usb_audio_offload) {
 		printk(BIOS_WARNING, "CNVi BT Audio offload enabled but not in USB driver\n");
 	}
-	if (!s_cfg->CnviBtAudioOffload && usb_audio_offload) {
+	if (!s_cfg->CnviBtAudioOffload && usb_cfg && usb_audio_offload) {
 		printk(BIOS_ERR, "USB BT Audio offload enabled but CNVi BT offload disabled\n");
 		usb_cfg->cnvi_bt_audio_offload = 0;
 	}

@@ -2,15 +2,15 @@
 
 # Umbrella option to be selected by variant boards.
 config BOARD_GOOGLE_RAURU_COMMON
-	def_bool BOARD_GOOGLE_NAVI || \
+	def_bool BOARD_GOOGLE_HYLIA || \
+		 BOARD_GOOGLE_NAVI || \
 		 BOARD_GOOGLE_RAURU
 
 if BOARD_GOOGLE_RAURU_COMMON
 
 config VBOOT
 	select VBOOT_VBNV_FLASH
-	select VBOOT_NO_BOARD_SUPPORT
-	select VBOOT_MOCK_SECDATA
+	select EC_GOOGLE_CHROMEEC_SWITCHES
 
 config BOARD_SPECIFIC_OPTIONS
 	def_bool y
@@ -20,6 +20,13 @@ config BOARD_SPECIFIC_OPTIONS
 	select COMMON_CBFS_SPI_WRAPPER
 	select SPI_FLASH
 	select SPI_FLASH_INCLUDE_ALL_DRIVERS
+	select CHROMEOS_USE_EC_WATCHDOG_FLAG if CHROMEOS
+	select EC_GOOGLE_CHROMEEC
+	select EC_GOOGLE_CHROMEEC_BOARDID
+	select EC_GOOGLE_CHROMEEC_SPI
+	select I2C_TPM if VBOOT
+	select MAINBOARD_HAS_TPM2 if VBOOT
+	select TPM_GOOGLE_TI50 if VBOOT
 
 config MAINBOARD_DIR
 	string
@@ -27,10 +34,24 @@ config MAINBOARD_DIR
 
 config MAINBOARD_PART_NUMBER
 	string
+	default "Hylia" if BOARD_GOOGLE_HYLIA
 	default "Navi" if BOARD_GOOGLE_NAVI
 	default "Rauru" if BOARD_GOOGLE_RAURU
 
 config BOOT_DEVICE_SPI_FLASH_BUS
 	int
 	default 8
+
+config EC_GOOGLE_CHROMEEC_SPI_BUS
+	hex
+	default 0x1
+
+config DRIVER_TPM_I2C_BUS
+	hex
+	default 0x1
+
+config DRIVER_TPM_I2C_ADDR
+	hex
+	default 0x50
+
 endif

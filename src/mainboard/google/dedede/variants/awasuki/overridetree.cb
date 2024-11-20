@@ -1,4 +1,7 @@
 chip soc/intel/jasperlake
+	# PCIe RP LTR configuration
+	register "PcieRpLtrEnable[7]" = "1"
+
 	# USB Port Configuration
 	register "usb2_ports[1]" = "USB2_PORT_EMPTY"
 	register "usb2_ports[3]" = "USB2_PORT_EMPTY"
@@ -30,6 +33,12 @@ chip soc/intel/jasperlake
 		},
 		.i2c[0] = {
 			.speed = I2C_SPEED_FAST,
+			.speed_config[0] = {
+				.speed = I2C_SPEED_FAST,
+				.scl_lcnt = 178,
+				.scl_hcnt = 92,
+				.sda_hold = 40,
+			}
 		},
 		.i2c[2] = {
 			.speed = I2C_SPEED_FAST,

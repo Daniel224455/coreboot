@@ -33,6 +33,7 @@ pademelon <amd/pademelon/pademelon.md>
 H77 Pro4-M <asrock/h77pro4-m.md>
 H81M-HDS <asrock/h81m-hds.md>
 H110M-DVS <asrock/h110m-dvs.md>
+IMB-1222 <asrock/imb-1222.md>
 ```
 
 ## ASUS
@@ -176,6 +177,7 @@ Hardware Maintenance Manual of ThinkPads <lenovo/thinkpad_hmm.md>
 R60 <lenovo/r60.md>
 T4xx common <lenovo/t4xx_series.md>
 X2xx common <lenovo/x2xx_series.md>
+M920 Tiny <lenovo/m920q.md>
 vboot <lenovo/vboot.md>
 ```
 
@@ -336,6 +338,7 @@ StarBook Mk VI <starlabs/starbook_adl.md>
 Byte Mk II <starlabs/byte_adl.md>
 StarFighter Mk I <starlabs/starfighter_rpl.md>
 
+Building coreboot <starlabs/common/building.md>
 Flashing devices <starlabs/common/flashing.md>
 ```
 

@@ -5,6 +5,7 @@ fw_config
 		option AUDIO_ALC722_SNDW		2
 		option AUDIO_ALC256_HDA			3
 		option AUDIO_MAX98360_ALC5682I_I2S	4
+		option AUDIO_ALC721_SNDW		5
 	end
 	field WIFI 4 5
 		option WIFI_CNVI_6		0
@@ -61,6 +62,10 @@ fw_config
 		option WFC_ABSENT		0
 		option WFC_MIPI			1
 		option WFC_USB			2
+	end
+	field ISH 24
+		option ISH_DISABLE		0
+		option ISH_ENABLE		1
 	end
 end
 
@@ -136,6 +141,10 @@ chip soc/intel/pantherlake
 	}"
 
 	device domain 0 on
+		device ref igpu on
+			probe DISPLAY DISPLAY_PRESENT
+		end
+
 		device ref ipu on
 			chip drivers/intel/mipi_camera
 				register "acpi_uid" = "0x50000"
@@ -219,6 +228,14 @@ chip soc/intel/pantherlake
 			chip drivers/intel/usb4/retimer
 				register "dfp[1].power_gpio" = "ACPI_GPIO_OUTPUT_ACTIVE_HIGH(GPP_B21)"
 				use tcss_usb3_port3 as dfp[1].typec_port
+				device generic 0 on end
+			end
+		end
+
+		device ref ish on
+			probe ISH ISH_ENABLE
+			chip drivers/intel/ish
+				register "add_acpi_dma_property" = "true"
 				device generic 0 on end
 			end
 		end
@@ -607,7 +624,19 @@ chip soc/intel/pantherlake
 						device generic 1.1 on
 							probe AUDIO AUDIO_ALC722_SNDW
 						end
+						# SoundWire Link 3 ID 1
+						device generic 3.1 on
+							probe AUDIO AUDIO_ALC721_SNDW
+						end
 					end
+				end
+			end
+			chip drivers/generic/max98357a
+				register "hid" = ""MX98360A""
+				register "sdmode_gpio" = "ACPI_GPIO_OUTPUT_ACTIVE_HIGH(GPP_E19)"
+				register "sdmode_delay" = "5"
+				device generic 0 on
+					probe AUDIO AUDIO_MAX98360_ALC5682I_I2S
 				end
 			end
 		end

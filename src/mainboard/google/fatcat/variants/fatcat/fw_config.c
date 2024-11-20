@@ -453,10 +453,28 @@ static const struct pad_config touchpad_i2c_disable_pads[] = {
 	PAD_NC(GPP_F18, NONE),
 };
 
+static const struct pad_config ish_disable_pads[] = {
+	/* GPP_D05:     NC */
+	PAD_NC(GPP_D05, NONE),
+	/* GPP_D06:     NC */
+	PAD_NC(GPP_D06, NONE),
+	/* GPP_E05:     NC */
+	PAD_NC(GPP_E05, NONE),
+};
+
+static const struct pad_config ish_enable_pads[] = {
+	/* GPP_D05:     ISH_UART0_RXD */
+	PAD_CFG_NF(GPP_D05, NONE, DEEP, NF2),
+	/* GPP_D06:     ISH_UART0_TXD */
+	PAD_CFG_NF(GPP_D06, NONE, DEEP, NF2),
+	/* GPP_E05:     ISH_GP_7_SNSR_HDR */
+	PAD_CFG_NF(GPP_E05, NONE, DEEP, NF4),
+};
+
 void fw_config_configure_pre_mem_gpio(void)
 {
 	if (!fw_config_is_provisioned()) {
-		printk(BIOS_WARNING, "FW_CONFIG is not provisioned, Existing");
+		printk(BIOS_WARNING, "FW_CONFIG is not provisioned, Exiting\n");
 		return;
 	}
 
@@ -501,7 +519,7 @@ void fw_config_configure_pre_mem_gpio(void)
 void fw_config_gpio_padbased_override(struct pad_config *padbased_table)
 {
 	if (!fw_config_is_provisioned()) {
-		printk(BIOS_WARNING, "FW_CONFIG is not provisioned, Existing");
+		printk(BIOS_WARNING, "FW_CONFIG is not provisioned, Exiting\n");
 		return;
 	}
 
@@ -533,7 +551,8 @@ void fw_config_gpio_padbased_override(struct pad_config *padbased_table)
 		GPIO_PADBASED_OVERRIDE(padbased_table, i2s_enable_pads);
 	else if (fw_config_probe(FW_CONFIG(AUDIO, AUDIO_MAX98373_ALC5682_SNDW)))
 		GPIO_PADBASED_OVERRIDE(padbased_table, sndw_external_codec_enable_pads);
-	else if (fw_config_probe(FW_CONFIG(AUDIO, AUDIO_ALC722_SNDW)))
+	else if (fw_config_probe(FW_CONFIG(AUDIO, AUDIO_ALC722_SNDW)) ||
+		fw_config_probe(FW_CONFIG(AUDIO, AUDIO_ALC721_SNDW)))
 		GPIO_PADBASED_OVERRIDE(padbased_table, sndw_alc722_enable_pads);
 	else if (fw_config_probe(FW_CONFIG(AUDIO, AUDIO_ALC256_HDA)))
 		GPIO_PADBASED_OVERRIDE(padbased_table, hda_enable_pads);
@@ -577,6 +596,11 @@ void fw_config_gpio_padbased_override(struct pad_config *padbased_table)
 		GPIO_PADBASED_OVERRIDE(padbased_table, touchscreen_thc_spi_enable_pads);
 	else
 		GPIO_PADBASED_OVERRIDE(padbased_table, touchscreen_disable_pads);
+
+	if (fw_config_probe(FW_CONFIG(ISH, ISH_DISABLE)))
+		GPIO_PADBASED_OVERRIDE(padbased_table, ish_disable_pads);
+	else
+		GPIO_PADBASED_OVERRIDE(padbased_table, ish_enable_pads);
 
 	/* NOTE: disable PEG (x8 slot) and x4 slot wake for now */
 	GPIO_PADBASED_OVERRIDE(padbased_table, peg_x4slot_wake_disable_pads);

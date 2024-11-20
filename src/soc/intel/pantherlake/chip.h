@@ -65,7 +65,9 @@ static const struct {
 } cpuid_to_ptl[] = {
 	{ PCI_DID_INTEL_PTL_U_ID_1, PTL_U_1_CORE, TDP_15W },
 	{ PCI_DID_INTEL_PTL_H_ID_1, PTL_H_1_CORE, TDP_25W },
-	{ PCI_DID_INTEL_PTL_H_ID_2, PTL_H_3_CORE, TDP_45W },
+	{ PCI_DID_INTEL_PTL_H_ID_2, PTL_H_1_CORE, TDP_25W },
+	{ PCI_DID_INTEL_PTL_H_ID_3, PTL_H_2_CORE, TDP_25W },
+	{ PCI_DID_INTEL_PTL_H_ID_4, PTL_H_2_CORE, TDP_25W },
 };
 
 /* Types of display ports */
@@ -509,6 +511,8 @@ struct soc_intel_pantherlake_config {
 	 * as per `enum slew_rate` data type.
 	 */
 	uint8_t slow_slew_rate_config[NUM_VR_DOMAINS];
+
+	uint16_t max_dram_speed_mts;
 
 };
 

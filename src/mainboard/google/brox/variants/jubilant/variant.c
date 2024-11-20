@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 
-#include <assert.h>
 #include <bootstate.h>
 #include <baseboard/variants.h>
 #include <chip.h>
@@ -31,9 +30,15 @@ const char *get_wifi_sar_cbfs_filename(void)
 	return get_wifi_sar_fw_config_filename(FW_CONFIG_FIELD(WIFI_BT));
 }
 
+const char *variant_get_auxfw_version_file(void)
+{
+	return "rts5453_retimer_bypass.hash";
+}
+
 static void wwan_out_of_reset(void *unused)
 {
-	if (fw_config_probe(FW_CONFIG(DB_USB, DB_1A_LTE))) {
+	if (fw_config_probe(FW_CONFIG(DB_USB, DB_1A_LTE)) ||
+		fw_config_probe(FW_CONFIG(DB_USB, DB_1A_LTE_SAR))) {
 		gpio_set(WWAN_FCPO_L, 1);
 		gpio_set(WWAN_RSL_L, 1);
 	}

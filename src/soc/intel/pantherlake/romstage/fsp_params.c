@@ -9,6 +9,7 @@
 #include <soc/msr.h>
 #include <soc/pcie.h>
 #include <soc/romstage.h>
+#include <static.h>
 
 #define FSP_CLK_NOTUSED		0xff
 #define FSP_CLK_LAN		0x70
@@ -73,8 +74,12 @@ static void fill_fspm_mrc_params(FSP_M_CONFIG *m_cfg,
 			m_cfg->SaGvWpMask = SAGV_POINTS_0_1_2_3;
 	}
 
+	if (config->max_dram_speed_mts)
+		m_cfg->DdrFreqLimit = config->max_dram_speed_mts;
+
 	m_cfg->RMT = config->rmt;
 	m_cfg->MrcFastBoot = 1;
+	m_cfg->LowerBasicMemTestSize = config->lower_basic_mem_test_size;
 }
 
 static void fill_fspm_cpu_params(FSP_M_CONFIG *m_cfg,

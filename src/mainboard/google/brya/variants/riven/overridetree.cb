@@ -24,6 +24,13 @@ fw_config
 end
 
 chip soc/intel/alderlake
+	# Acoustic settings
+	register "acoustic_noise_mitigation" = "1"
+	register "slow_slew_rate[VR_DOMAIN_IA]" = "SLEW_FAST_4"
+	register "slow_slew_rate[VR_DOMAIN_GT]" = "SLEW_FAST_4"
+	register "fast_pkg_c_ramp_disable[VR_DOMAIN_IA]" = "1"
+	register "fast_pkg_c_ramp_disable[VR_DOMAIN_GT]" = "1"
+
 	register "sagv" = "SaGv_Enabled"
 
 	# EMMC Tx CMD Delay
@@ -236,7 +243,7 @@ chip soc/intel/alderlake
 				register "generic.reset_delay_ms" = "20"
 				register "generic.reset_off_delay_ms" = "2"
 				register "generic.stop_gpio" = "ACPI_GPIO_OUTPUT_ACTIVE_LOW(GPP_C6)"
-				register "generic.stop_delay_ms" = "280"
+				register "generic.stop_delay_ms" = "180"
 				register "generic.stop_off_delay_ms" = "2"
 				register "generic.enable_gpio" = "ACPI_GPIO_OUTPUT_ACTIVE_HIGH(GPP_C0)"
 				register "generic.enable_delay_ms" = "1"
@@ -253,7 +260,7 @@ chip soc/intel/alderlake
 				register "generic.reset_delay_ms" = "20"
 				register "generic.reset_off_delay_ms" = "2"
 				register "generic.stop_gpio" = "ACPI_GPIO_OUTPUT_ACTIVE_LOW(GPP_C6)"
-				register "generic.stop_delay_ms" = "280"
+				register "generic.stop_delay_ms" = "180"
 				register "generic.stop_off_delay_ms" = "2"
 				register "generic.enable_gpio" = "ACPI_GPIO_OUTPUT_ACTIVE_HIGH(GPP_C0)"
 				register "generic.enable_delay_ms" = "1"

@@ -9,7 +9,6 @@
 #include <device/pci_type.h>
 #include <device/resource.h> /* IWYU pragma: export */
 #include <smbios.h>
-#include <static.h>
 #include <stdlib.h>
 #include <types.h>
 
@@ -187,7 +186,7 @@ const struct device *dev_get_domain(const struct device *dev);
 unsigned int dev_get_domain_id(const struct device *dev);
 void dev_set_enabled(struct device *dev, int enable);
 void disable_children(struct bus *bus);
-bool dev_is_active_bridge(struct device *dev);
+bool dev_is_active_bridge(const struct device *dev);
 bool is_dev_enabled(const struct device *const dev);
 bool is_devfn_enabled(unsigned int devfn);
 bool is_cpu(const struct device *cpu);
@@ -196,6 +195,7 @@ bool is_pci(const struct device *pci);
 bool is_enabled_pci(const struct device *pci);
 bool is_pci_dev_on_bus(const struct device *pci, unsigned int bus);
 bool is_pci_bridge(const struct device *pci);
+bool is_pci_ioapic(const struct device *pci);
 bool is_domain0(const struct device *dev);
 bool is_dev_on_domain0(const struct device *dev);
 
@@ -501,13 +501,5 @@ void enable_static_devices(struct device *bus);
 void scan_smbus(struct device *bus);
 void scan_generic_bus(struct device *bus);
 void scan_static_bus(struct device *bus);
-
-/* Macro to generate `struct device *` name that points to a device with the given alias. */
-#define DEV_PTR(_alias)		_dev_##_alias##_ptr
-
-/* Macro to generate weak `struct device *` definition that points to a device with the given
-   alias. */
-#define WEAK_DEV_PTR(_alias)			\
-	__weak DEVTREE_CONST struct device *const DEV_PTR(_alias)
 
 #endif /* DEVICE_H */
