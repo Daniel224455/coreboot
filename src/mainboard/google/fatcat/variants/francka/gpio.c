@@ -86,7 +86,7 @@ static const struct pad_config gpio_table[] = {
 	/* GPP_B17:     SOC_ENVDD2 */
 	PAD_CFG_NF(GPP_B17, NONE, DEEP, NF2),
 	/* GPP_B18:     TCHSCR_REPORT_DISABLE */
-	PAD_CFG_GPO(GPP_B18, 0, PLTRST),
+	PAD_CFG_GPO(GPP_B18, 1, PLTRST),
 	/* GPP_B19:     SOC_CNVI_EN# */
 	PAD_CFG_GPO(GPP_B19, 0, PLTRST),
 	/* GPP_B20:     SOC_WWAN_RST# */
@@ -406,11 +406,11 @@ static const struct pad_config early_gpio_table[] = {
 	/* GPP_H09:     UART_0_CTXD_DRXD */
 	PAD_CFG_NF(GPP_H09, NONE, DEEP, NF1),
 
-	/* GPP_H06: SOC_I2C_3_SDA */
-	PAD_CFG_NF(GPP_H06, NONE, DEEP, NF1),
-	/* GPP_H07: SOC_I2C_3_SCL */
-	PAD_CFG_NF(GPP_H07, NONE, DEEP, NF1),
-	/* GPP_D15: GSC_SOC_INT_ODL */
+	/* GPP_H21:     SOC_I2C_1_SDA */
+	PAD_CFG_NF(GPP_H21, NONE, DEEP, NF1),
+	/* GPP_H22:     SOC_I2C_1_SCL */
+	PAD_CFG_NF(GPP_H22, NONE, DEEP, NF1),
+	/* GPP_H11: GSC_SOC_INT_ODL */
 	PAD_CFG_GPI_APIC_LOCK(GPP_H11, NONE, LEVEL, INVERT, LOCK_CONFIG),
 };
 

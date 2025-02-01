@@ -129,9 +129,9 @@ static void cnvw_fill_ssdt(const struct device *dev)
  *					If (((PCRR (CNVI_SIDEBAND_ID, CNVI_ABORT_PLDR) & CNVI_ABORT_REQUEST) == Zero))
  *					{
  *						Local2 = Zero
- *						If ((GBTE() == One))
+ *						If ((\_SB.PCI0.GBTR() == One))
  *						{
- *							BTRK (Zero)
+ *							\_SB.PCI0.BTRK (Zero)
  *							Sleep (105)
  *							Local2 = One
  *						}
@@ -143,7 +143,7 @@ static void cnvw_fill_ssdt(const struct device *dev)
  *							PRRS = CNVI_PLDR_COMPLETE
  *							If ((Local2 == One))
  *							{
- *								BTRK (One)
+ *								\_SB.PCI0.BTRK (One)
  *								Sleep (105)
  *							}
  *						}
@@ -209,9 +209,9 @@ static void cnvw_fill_ssdt(const struct device *dev)
 					acpigen_write_if_lequal_op_int(LOCAL0_OP, 0);
 					{
 						acpigen_write_store_int_to_op(0, LOCAL2_OP);
-						acpigen_write_if_lequal_namestr_int("\\_SB.PCI0.GBTE", 1);
+						acpigen_write_if_lequal_namestr_int("\\_SB.PCI0.GBTR", 1);
 						{
-							acpigen_emit_namestring("BTRK");
+							acpigen_emit_namestring("\\_SB.PCI0.BTRK");
 							acpigen_emit_byte(0);
 
 							acpigen_write_sleep(105);
@@ -251,7 +251,7 @@ static void cnvw_fill_ssdt(const struct device *dev)
 
 								acpigen_write_if_lequal_op_int(LOCAL2_OP, 1);
 								{
-									acpigen_emit_namestring("BTRK");
+									acpigen_emit_namestring("\\_SB.PCI0.BTRK");
 									acpigen_emit_byte(1);
 									acpigen_write_sleep(105);
 								}
@@ -338,51 +338,26 @@ static void cnvw_fill_ssdt(const struct device *dev)
 	acpigen_write_method("_DSW", 3);
 	acpigen_pop_len();
 
-	acpigen_write_scope_end();
-
 /*
  *	Method (CFLR, 0, NotSerialized)
  *	{
- *		If (^CNVW.WFLR == One)
+ *		If (WFLR == One)
  *		{
- *			^CNVW.WIFR = One
+ *			WIFR = One
  *		}
  *	}
  */
 	acpigen_write_method("CFLR", 0);
 	{
-		acpigen_write_if_lequal_namestr_int("^CNVW.WFLR", 1);
+		acpigen_write_if_lequal_namestr_int("WFLR", 1);
 		{
-			acpigen_write_store_int_to_namestr(1, "^CNVW.WIFR");
+			acpigen_write_store_int_to_namestr(1, "WIFR");
 		}
 		acpigen_pop_len();
 	}
 	acpigen_pop_len();
 
-/*
- *	Method (CNIP, 0, NotSerialized)
- *	{
- *		If (^CNVW.VDID == 0xFFFFFFFF)
- *		{
- *			Return (Zero)
- *		} Else {
- *			Return (One)
- *		}
- *	}
- */
-	acpigen_write_method("CNIP", 0);
-	{
-		acpigen_write_if_lequal_namestr_int("^CNVW.VDID", 0xffffffff);
-		{
-			acpigen_write_return_integer(0);
-		}
-		acpigen_write_else();
-		{
-			acpigen_write_return_integer(1);
-		}
-		acpigen_pop_len();
-	}
-	acpigen_pop_len();
+	acpigen_write_scope_end();
 }
 
 static struct device_operations cnvi_wifi_ops = {
@@ -470,6 +445,8 @@ static struct device_operations cnvi_bt_ops = {
 };
 
 static const unsigned short bt_pci_device_ids[] = {
+	PCI_DID_INTEL_PTL_H_CNVI_BT,
+	PCI_DID_INTEL_PTL_U_H_CNVI_BT,
 	PCI_DID_INTEL_TGL_CNVI_BT_0,
 	PCI_DID_INTEL_TGL_CNVI_BT_1,
 	PCI_DID_INTEL_TGL_CNVI_BT_2,

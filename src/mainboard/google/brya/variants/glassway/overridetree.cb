@@ -326,7 +326,7 @@ chip soc/intel/alderlake
 				}"
 
 				## Fan options
-				register "options.fan.fine_grained_control" = "1"
+				register "options.fan.fine_grained_control" = "true"
 				register "options.fan.step_size" = "2"
 
 				device generic 1 on
@@ -353,7 +353,7 @@ chip soc/intel/alderlake
 				register "stop_off_delay_ms" = "25"
 				register "enable_gpio" = "ACPI_GPIO_OUTPUT_ACTIVE_HIGH(GPP_C0)"
 				register "enable_delay_ms" = "25"
-				register "has_power_resource" = "1"
+				register "has_power_resource" = "true"
 				device i2c 10 on
 					probe TOUCHSCREEN_SOURCE TOUCHSCREEN_UNPROVISIONED
 					probe TOUCHSCREEN_SOURCE TOUCHSCREEN_ELAN0001
@@ -403,10 +403,13 @@ chip soc/intel/alderlake
 				register "generic.irq" = "ACPI_IRQ_LEVEL_LOW(GPP_C7_IRQ)"
 				register "generic.detect" = "1"
 				register "generic.reset_gpio" = "ACPI_GPIO_OUTPUT_ACTIVE_LOW(GPP_C1)"
-				register "generic.reset_delay_ms" = "100"
-				register "generic.reset_off_delay_ms" = "2"
+				register "generic.reset_delay_ms" = "10"
+				register "generic.reset_off_delay_ms" = "4"
 				register "generic.enable_gpio" = "ACPI_GPIO_OUTPUT_ACTIVE_HIGH(GPP_C0)"
-				register "generic.enable_delay_ms" = "6"
+				register "generic.enable_delay_ms" = "12"
+				register "generic.stop_gpio" = "ACPI_GPIO_OUTPUT_ACTIVE_LOW(GPP_C6)"
+				register "generic.stop_delay_ms" = "105"
+				register "generic.stop_off_delay_ms" = "5"
 				register "generic.has_power_resource" = "1"
 				register "hid_desc_reg_offset" = "0x01"
 				device i2c 41 on

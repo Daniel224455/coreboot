@@ -10,7 +10,7 @@ all-y += ../common/timer.c
 all-y += ../common/uart.c
 
 bootblock-y += bootblock.c
-bootblock-y += ../common/eint_event.c
+bootblock-y += ../common/eint_event.c ../common/eint_event_info.c
 bootblock-y += ../common/mmu_operations.c
 bootblock-y += ../common/pll.c pll.c
 bootblock-y += ../common/tracker.c ../common/tracker_v2.c
@@ -49,7 +49,7 @@ ramstage-y += ../common/mtcmos.c mtcmos.c
 ramstage-y += ../common/pmif.c ../common/pmif_init.c
 ramstage-y += ../common/rtc.c ../common/rtc_mt6359p.c
 ramstage-y += soc.c
-ramstage-y += ../common/spm.c spm.c
+ramstage-y += ../common/spm.c ../common/spm_v1.c spm.c
 ramstage-y += ../common/sspm.c
 ramstage-y += ../common/ufs.c
 ramstage-y += ../common/usb.c usb.c
